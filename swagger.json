@@ -1,0 +1,170 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Teste - Info Sistemas e Tecnologia",
+    "version": "1.0",
+    "description": "Teste aplicado pela Info no processo seletivo."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/api",
+      "description": "Servidor local"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "veiculoInput": {
+        "type": "object",
+        "properties": {
+          "placa": {
+            "type": "string"
+          },
+          "chassi": {
+            "type": "string"
+          },
+          "renavam": {
+            "type": "string"
+          },
+          "modelo": {
+            "type": "string"
+          },
+          "marca": {
+            "type": "string"
+          },
+          "ano": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/veiculo": {
+      "get": {
+        "summary": "Listar um veículo",
+        "tags": [
+          "veiculos"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Veículo encontrado"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          },
+          "404": {
+            "description": "veiculo nao encontrado"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cadastrar um veículo",
+        "description": "Cria um novo registro de veículo no sistema",
+        "tags": [
+          "veiculos"
+        ],
+        "requestBody": {
+          "description": "Dados do veículo a serem atualizados",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/veiculoInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Veículo cadastrado com sucesso"
+          },
+          "400": {
+            "description": "Requisição inválida"
+          }
+        }
+      }
+    },
+    "/veiculo/{id}": {
+      "put": {
+        "summary": "Atualiza um veículo pelo ID",
+        "tags": [
+          "veiculos"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do veículo a ser atualizado"
+          }
+        ],
+        "requestBody": {
+          "description": "Dados do veículo a serem atualizados",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/veiculoInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Veículo atualizado com sucesso"
+          },
+          "404": {
+            "description": "Veículo não encontrado"
+          },
+          "500": {
+            "description": "Erro ao atualizar o veículo"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir um veículo pelo ID",
+        "description": "Exclui um veículo com o ID especificado",
+        "tags": [
+          "veiculos"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "description": "ID do veículo a ser excluído",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Veículo excluído com sucesso"
+          },
+          "404": {
+            "description": "Veículo não encontrado"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "veiculos"
+    }
+  ]
+}
